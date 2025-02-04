@@ -1,34 +1,57 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function AddBlog() {
-    const [title, settitle] = useState('')
-    const [url, seturl] = useState('');
-    const [content, setcontent] = useState('');
-    const [blogdata, setblogdata] = useState([]);
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [title, setTitle] = useState('');
+    const [url, setUrl] = useState('');
+    const [content, setContent] = useState('');
+    const [author, setAuthor] = useState('');
+    const [blogData, setBlogData] = useState([]);
 
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setUrl(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 
     useEffect(() => {
         const temp = JSON.parse(localStorage.getItem("data_storage")) || [];
         if (temp) {
-            setblogdata(temp);
+            setBlogData(temp);
+            if (id && temp[id]) {
+                setTitle(temp[id].title);
+                setUrl(temp[id].url);
+                setContent(temp[id].content);
+                setAuthor(temp[id].author);
+            }
         }
-    }, []);
+    }, [id]);
 
     useEffect(() => {
-        if (blogdata.length > 0) {
-            localStorage.setItem("data_storage", JSON.stringify(blogdata));
+        if (blogData.length > 0) {
+            localStorage.setItem("data_storage", JSON.stringify(blogData));
         }
-    }, [blogdata]);
+    }, [blogData]);
 
-    function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        const newdata = { title, url, content };
-        const updated = [...blogdata, newdata];
-        setblogdata(updated);
-        seturl('');
-        setcontent('');
-
-    }
+        const newData = { title, url, content, author, likes: 0, comments: [] };
+        let updated;
+        if (id) {
+            updated = blogData.map((blog, index) => (index === parseInt(id) ? newData : blog));
+        } else {
+            updated = [...blogData, newData];
+        }
+        setBlogData(updated);
+        navigate('/');
+    };
 
     return (
         <div className='text-xl'>
@@ -37,24 +60,36 @@ function AddBlog() {
                     <div className='flex items-center gap-3'>
                         <label htmlFor="inputtitle" className=''>Blog Title :</label>
                     </div>
-                    <input type="text" className='w-200 h-10 border-2 indent-4' value={title} placeholder='Title' onChange={(e) => settitle(e.target.value)} />
+                    <input type="text" className='w-200 h-10 border-2 indent-4' value={title} placeholder='Title' onChange={(e) => setTitle(e.target.value)} />
                 </div>
                 <div className='flex flex-col gap-3'>
                     <div className='flex items-center gap-3'>
-                        <label htmlFor="inputurl" className=''>Enter Image URL </label>
+                        <label htmlFor="inputimage" className=''>Upload Blog Image</label>
                     </div>
-                    <input type="text" className='w-200 h-10 border-2 indent-4' value={url} placeholder='Url' onChange={(e) => seturl(e.target.value)} />
+                    <input 
+                        type="file" 
+                        accept="image/*"
+                        className='w-200 h-10 border-2 p-1' 
+                        onChange={handleImageUpload}
+                    />
+                    {url && <img src={url} alt="Preview" className="h-40 object-left object-contain" />}
                 </div>
                 <div className='flex flex-col gap-3'>
                     <div className='flex items-center gap-3'>
-                        <label htmlFor="inputurl" className=''>Blog Content :</label>
+                        <label htmlFor="inputauthor" className=''>Author Name :</label>
                     </div>
-                    <textarea name="" id="" className='border-2 indent-4 pt-2 w-full h-100' placeholder='Content' value={content} onChange={(e) => setcontent(e.target.value)}></textarea>
+                    <input type="text" className='w-200 h-10 border-2 indent-4' value={author} placeholder='Author' onChange={(e) => setAuthor(e.target.value)} />
                 </div>
-                <button type='submit' className='h-10 w-40 bg-stone-950 text-white rounded-md'>Publish</button>
+                <div className='flex flex-col gap-3'>
+                    <div className='flex items-center gap-3'>
+                        <label htmlFor="inputcontent" className=''>Blog Content :</label>
+                    </div>
+                    <textarea name="" id="" className='border-2 indent-4 pt-2 w-full h-100' placeholder='Content' value={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                </div>
+                <button type='submit' className='h-10 w-40 bg-stone-950 text-white rounded-md'>{id ? 'Update' : 'Publish'}</button>
             </form>
         </div>
     )
 }
 
-export default AddBlog
+export default AddBlog;

@@ -17,7 +17,7 @@ const Header = () => {
 					</form>
 				</div>
 				<div className='mx-10 gap-5 text-stone-400 border-stone-400 hover:border-gray-100 hover:text-white p-2 rounded-full transition delay-150 duration-300 ease-in-out'>
-					<Link to="/addblogs" className='flex'>
+					<Link to="/addblog" className='flex'>
 						<PenLine size={30} />
 						<h1>Write</h1>
 					</Link>
