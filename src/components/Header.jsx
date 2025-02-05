@@ -4,7 +4,7 @@ import { Search, PenLine } from 'lucide-react';
 const Header = () => {
 	return (
 		<>
-			<div className="flex items-center justify-between h-20 w-full bg-stone-900 text-white scheme-dark">
+			<div className="flex items-center justify-between h-20 w-full bg-stone-900 text-white">
 				<div className="mx-10 my-5">
 					<Link to="/" className='flex'>
 						<h1>BlogBuddy</h1>

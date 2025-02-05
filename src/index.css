@@ -2,5 +2,7 @@
 
 body{
     font-family: monospace;
-    background-color: rgb(231, 231, 231);
+    background: linear-gradient(to right, #fcfcfc, #e9e7e7);
+    height: 16rem; /* Adjust the height */
+    width: 100%;
 }

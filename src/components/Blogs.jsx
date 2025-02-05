@@ -27,15 +27,15 @@ const Blogs = () => {
         data === null ? (
           <p className='text-2xl w-full text-center'>No blogs added yet.</p>
         ) : (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+          <div className='grid m-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
             {data.map((item, index) => (
-              <div key={index} className='p-3 border-2 rounded-lg cursor-pointer'>
+              <div key={index} className='p-3 border-2 rounded-lg cursor-pointer transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:border-gray-500'>
                 {item.url && <img src={item.url} alt="Blog" className='h-40 w-full object-cover mb-4' onClick={() => handleBlogClick(index)} />}
                 <div onClick={() => handleBlogClick(index)}>
                   <p className='font-bold text-2xl mb-2 text-gray-500 uppercase'>{item.title}</p>
                   <p className='text-gray-600'>{item.content.substring(0, 100)}...</p>
                 </div>
-                <button onClick={() => handleDelete(index)} className='mt-4 bg-red-500 text-white p-2 rounded'>Delete</button>
+                <button onClick={() => handleDelete(index)} className='mt-4 bg-red-500 text-white p-2 rounded cursor-pointer hover:-translate-y-1 hover:scale-110'>Delete</button>
               </div>
             ))}
           </div>
