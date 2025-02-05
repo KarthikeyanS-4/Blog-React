@@ -84,9 +84,9 @@ function AddBlog() {
                     <div className='flex items-center gap-3'>
                         <label htmlFor="inputcontent" className=''>Blog Content :</label>
                     </div>
-                    <textarea name="" id="" className='border-2 indent-4 pt-2 w-full h-100' placeholder='Content' value={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                    <textarea name="" id="" className='border-2 indent-4 pt-2 w-4xl h-100' placeholder='Content' value={content} onChange={(e) => setContent(e.target.value)}></textarea>
                 </div>
-                <button type='submit' className='h-10 w-40 bg-stone-950 text-white rounded-md'>{id ? 'Update' : 'Publish'}</button>
+                <button type='submit' className='h-10 w-40 bg-stone-950 text-white rounded-md cursor-pointer'>{id ? 'Update' : 'Publish'}</button>
             </form>
         </div>
     )

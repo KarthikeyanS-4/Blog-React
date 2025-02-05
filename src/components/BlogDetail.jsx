@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ThumbsUp } from 'lucide-react';
 
 function BlogDetail() {
   const { id } = useParams();
@@ -51,10 +52,10 @@ function BlogDetail() {
           <p className='whitespace-pre-wrap'>{blog.content}</p>
         </div>
         <div className='mt-6 flex gap-4 text-gray-500'>
-          <span onClick={handleLike} className='cursor-pointer'>👍 {blog.likes} likes</span>
+          <span onClick={handleLike} className='flex items-center cursor-pointer text-center gap-2'><ThumbsUp size={20}/> {blog.likes} likes</span>
           <span>💬 {comments.length} comments</span>
         </div>
-        <button onClick={handleEdit} className='mt-4 bg-blue-500 text-white p-2 rounded'>Edit</button>
+        <button onClick={handleEdit} className='mt-4 bg-blue-500 text-white p-2 rounded cursor-pointer'>Edit</button>
         <div className='mt-6'>
           <h2 className='text-2xl mb-4'>Comments</h2>
           <ul>
@@ -72,7 +73,7 @@ function BlogDetail() {
               className='w-full border-2 p-2'
               placeholder='Add a comment'
             ></textarea>
-            <button type='submit' className='mt-2 p-2 bg-stone-950 text-white rounded-md'>Submit</button>
+            <button type='submit' className='mt-2 p-2 bg-stone-950 text-white rounded-md cursor-pointer'>Submit</button>
           </form>
         </div>
       </div>
